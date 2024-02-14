@@ -4,13 +4,14 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from .models import User
+from .permissions import UserViewPermission
 from .serializers import UserSerializer
 
 
 class UserViews(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = []
+    permission_classes = [UserViewPermission]
 
     def create(self, request):
         serializer = self.serializer_class(
