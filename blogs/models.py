@@ -7,7 +7,7 @@ class Category(models.Model):
 
 
 class Blog(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='blogs')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='blogs')
     title = models.CharField(max_length=150)
     banner = models.ImageField()
     details = models.TextField()
@@ -22,4 +22,4 @@ class Blog(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     post_text = models.TextField()
-    blog = models.ForeignKey(Blog, on_delete=models.SET_NULL, related_name='posts')
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='posts')
