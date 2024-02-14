@@ -8,4 +8,4 @@ class ReadOnly(BasePermission):
 
 class IsAuthor(BasePermission):
     def has_permission(self, request, view):
-        return request.user.user_type == 2
+        return request.user.user_type == 1
