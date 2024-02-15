@@ -3,13 +3,16 @@ from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 
-from utils.views import SilkyModelViewset
+from utils.views import GetBaseModelViewSet
+# from utils.views import SilkyModelViewSet
 from .models import User
 from .permissions import UserViewPermission
 from .serializers import UserSerializer
 
+BaseModelViewSet_user = GetBaseModelViewSet("user")
 
-class UserViews(SilkyModelViewset):
+
+class UserViews(BaseModelViewSet_user):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [UserViewPermission]
