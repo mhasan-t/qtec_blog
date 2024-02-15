@@ -4,7 +4,7 @@ from . import views
 
 router = routers.SimpleRouter()
 router.register(r'categories', views.CategoryViews)
-router.register(r'blogs', views.BlogViews)
 router.register(r'posts', views.PostViews)
+router.register(r'', views.BlogViews)
 
 urlpatterns = router.urls
