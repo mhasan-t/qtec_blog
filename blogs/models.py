@@ -1,3 +1,4 @@
+from PIL import Image
 from django.db import models
 
 from accounts.models import User
@@ -16,6 +17,13 @@ class Blog(models.Model):
     total_views = models.IntegerField(default=0)
 
     REQUIRED_FIELDS = ['category', 'title', 'banner', 'details']
+
+    def save(self, *args, **kwargs):
+        img = Image.open(self.banner)
+        quality = 60  # 60% of original quality
+        img.save(self.banner.path, quality=quality)
+
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f'{self.title} - ({self.category})'
