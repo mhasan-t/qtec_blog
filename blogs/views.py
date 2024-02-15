@@ -1,28 +1,33 @@
 # Create your views here.
 from http import HTTPStatus
 
-from rest_framework import viewsets, permissions
+from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from silk.profiling.profiler import silk_profile
 
+from utils.views import SilkyModelViewset
 from .models import Category, Blog, Post
 from .permissions import IsAuthor, ReadOnly, IsOwnerOfBlog, IsOwnerOfPostBlog
 from .serializers import CategorySerializer, BlogSerializer, PostSerializer
 from .utils import autocorrect_string
 
 
-class CategoryViews(viewsets.ModelViewSet):
+class CategoryViews(SilkyModelViewset):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAdminUser | ReadOnly]
 
 
-class BlogViews(viewsets.ModelViewSet):
+class BlogViews(SilkyModelViewset):
+    view_name = "blogs"  # for silky profile name
+
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
     permission_classes = [permissions.IsAdminUser | IsOwnerOfBlog | IsAuthor | ReadOnly]
 
     @action(detail=False, methods=['GET'])
+    @silk_profile(name='search_blog')
     def search(self, request):
         # get search query param
         search_query = request.GET.get("q")
@@ -45,7 +50,7 @@ class BlogViews(viewsets.ModelViewSet):
         return Response(serialized.data, status=HTTPStatus.OK)
 
 
-class PostViews(viewsets.ModelViewSet):
+class PostViews(SilkyModelViewset):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAdminUser | IsOwnerOfPostBlog | ReadOnly]
