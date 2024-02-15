@@ -148,3 +148,4 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=30) if DEBUG == True else timedelta(minutes=5),
 }
 AUTH_USER_MODEL = 'accounts.User'
+SILKY_PYTHON_PROFILER = True
