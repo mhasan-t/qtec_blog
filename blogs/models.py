@@ -27,7 +27,7 @@ class Blog(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
-        return f'{self.title} - ({self.category})'
+        return f'{self.title}'
 
 
 class Post(models.Model):
