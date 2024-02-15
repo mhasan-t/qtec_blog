@@ -9,7 +9,7 @@ from .serializers import CategorySerializer, BlogSerializer, PostSerializer
 class CategoryViews(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser | ReadOnly]
 
 
 class BlogViews(viewsets.ModelViewSet):
