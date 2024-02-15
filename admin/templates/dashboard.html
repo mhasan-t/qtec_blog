@@ -1,4 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-DASH
+
+<div class="h-full flex justify-center items-center gap-8">
+    <div class="max-w-[700px] flex flex-col justify-center items-center gap-8">
+        <div>
+            <div>Total number of Blogs : {{ total_blogs_count }}</div>
+            <div>Total number of Posts : {{ total_posts_count }}</div>
+            <div>Total number of Categories : {{ total_categories_count }}</div>
+        </div>
+
+        <div>
+            <canvas id="chartContainer" class=""></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+
+
+            fetch("/admin/dashboard_data").then(
+                (res) => res.json()
+            ).then(
+                (data)=>{
+
+                    let category_blog_counts = [];
+                    let category_titles = [];
+
+
+                    for(let i=0; i<data.length; i++){
+                        category_blog_counts.push(data[i].num_of_blogs);
+                        category_titles.push(data[i].title);
+                    }
+
+                    const chart_data = {
+                        datasets: [{
+                            data: category_blog_counts
+                        }],
+                        labels: category_titles
+                    };
+
+                    const ctx = document.getElementById('chartContainer');
+
+                    new Chart(ctx, {
+                      type: 'pie',
+                      data: chart_data,
+
+                    });
+
+                }
+            );
+
+        </script>
+    </div>
+</div>
+
 {% endblock %}

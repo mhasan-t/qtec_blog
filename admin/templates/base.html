@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
 
     {% load static %}
+    <link rel="stylesheet" href="/static/output.css">
 
 </head>
 
@@ -11,14 +12,9 @@
 <body>
 <div id="header" class="header">
     <!-- NAVIGATION BAR -->
-    <nav id="navbar" class="navbar navbar-expand-sm justify-content-center py-4">
-        <a class="navbar-brand mr-auto" href="#">ADMIN</a>
-        <!-- Links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-secondary" href="{% url 'admin:blogs'%}">Blogs</a>
-            </li>
-        </ul>
+    <nav id="navbar" class="flex justify-between text-xl text-white bg-black p-4 py-8">
+        <a class="text-white bg-black" href="#">ADMIN</a>
+        <a class="text-white bg-black" href="{% url 'admin:blogs'%}">Blogs</a>
     </nav>
 </div>
 {% block content %}
