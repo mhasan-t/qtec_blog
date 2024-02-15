@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from .models import Category, Blog, Post
 from .permissions import IsAuthor, ReadOnly, IsOwnerOfBlog, IsOwnerOfPostBlog
 from .serializers import CategorySerializer, BlogSerializer, PostSerializer
+from .utils import autocorrect_string
 
 
 class CategoryViews(viewsets.ModelViewSet):
@@ -23,16 +24,21 @@ class BlogViews(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def search(self, request):
+        # get search query param
         search_query = request.GET.get("q")
         if not search_query:
             return Response({
                 "details": "Search query must be a string of length > 0"
             }, status=HTTPStatus.BAD_REQUEST)
 
+        # autocorrect spelling
+        corrected_query = autocorrect_string(search_query)
+
+        # search the database on full text index
         results = Blog.objects.extra(
             where=[
                 "MATCH(title, description) AGAINST (%s IN NATURAL LANGUAGE MODE)"],
-            params=[search_query]
+            params=[corrected_query]
         )
 
         serialized = BlogSerializer(results, many=True, context={'request': request})
