@@ -15,6 +15,7 @@ class Blog(models.Model):
     banner = models.ImageField()
     details = models.TextField()
     total_views = models.IntegerField(default=0)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blogs')
 
     REQUIRED_FIELDS = ['category', 'title', 'banner', 'details']
 

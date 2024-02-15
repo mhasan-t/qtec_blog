@@ -2,7 +2,7 @@
 from rest_framework import viewsets, permissions
 
 from .models import Category, Blog, Post
-from .permissions import IsAuthor, ReadOnly
+from .permissions import IsAuthor, ReadOnly, IsOwnerOfBlog, IsOwnerOfPostBlog
 from .serializers import CategorySerializer, BlogSerializer, PostSerializer
 
 
@@ -15,10 +15,10 @@ class CategoryViews(viewsets.ModelViewSet):
 class BlogViews(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
-    permission_classes = [permissions.IsAdminUser | IsAuthor | ReadOnly]
+    permission_classes = [permissions.IsAdminUser | IsOwnerOfBlog | IsAuthor | ReadOnly]
 
 
 class PostViews(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAdminUser | IsAuthor | ReadOnly]
+    permission_classes = [permissions.IsAdminUser | IsOwnerOfPostBlog | ReadOnly]

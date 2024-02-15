@@ -15,15 +15,21 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
     category = CategorySerializer(read_only=True)
     category_id = serializers.IntegerField(write_only=True)
 
+    creator = UserSerializer(read_only=True)
+
     class Meta:
         model = Blog
-        fields = ["category_id", "title", "banner", "details", "category"]
+        fields = ["category_id", "title", "banner", "details", "category", "creator"]
 
     def create(self, validated_data):
         category_id = validated_data.pop('category_id')
         category_instance = Category.objects.get(id=category_id)
 
-        blog_instance = Blog.objects.create(category=category_instance, **validated_data)
+        request = self.context.get('request')
+        creator_id = request.user.id
+        creator_instance = User.objects.get(id=creator_id)
+
+        blog_instance = Blog.objects.create(category=category_instance, creator=creator_instance, **validated_data)
         return blog_instance
 
 
