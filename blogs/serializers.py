@@ -19,7 +19,7 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ["category_id", "title", "banner", "details", "category", "creator"]
+        fields = ["category_id", "title", "banner", "description", "category", "creator"]
 
     def create(self, validated_data):
         category_id = validated_data.pop('category_id')
