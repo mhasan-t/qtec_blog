@@ -1,5 +1,7 @@
 from django.db import models
 
+from accounts.models import User
+
 
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True)
@@ -23,3 +25,4 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     post_text = models.TextField()
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
