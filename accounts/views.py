@@ -1,14 +1,15 @@
 # Create your views here.
 from django.db.models import Q
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.response import Response
 
+from utils.views import SilkyModelViewset
 from .models import User
 from .permissions import UserViewPermission
 from .serializers import UserSerializer
 
 
-class UserViews(viewsets.ModelViewSet):
+class UserViews(SilkyModelViewset):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [UserViewPermission]
