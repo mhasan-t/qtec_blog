@@ -4,9 +4,13 @@
 
 * {
     min-width: 0;
-    border : 0;
-    outline: none;
-    background-color: white;
-    color: black;
     z-index: 0;
+}
+
+* {
+    outline: none;
+}
+
+*:hover {
+    outline: none;
 }
