@@ -1,0 +1,19 @@
+version: '1'
+
+services:
+  api:
+    build: .
+    ports:
+      -8000:8000
+  db:
+    image: "mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD: password
+      - MYSQL_DATABASE: qtec_blog
+      - MYSQL_USER: noon
+      - MYSQL_PASSWORD: passpass
+    volumes:
+      - db-data:/
+
+volumes:
+  db-data:

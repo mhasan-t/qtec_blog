@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # third party
     'rest_framework',
     'silk',
+    'corsheaders',
 
     # local apps
     'accounts',
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'silk.middleware.SilkyMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'qtec_blog.urls'
@@ -159,3 +161,9 @@ CACHES = {
         }
     }
 }
+
+
+# CORS
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = True
+

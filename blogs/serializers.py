@@ -6,12 +6,14 @@ from .models import Category, Blog, Post
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     class Meta:
         model = Category
         fields = '__all__'
 
 
 class BlogSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     category = CategorySerializer(read_only=True)
     category_id = serializers.IntegerField(write_only=True)
 
@@ -19,7 +21,7 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ["category_id", "title", "banner", "description", "category", "creator"]
+        fields = ["id", "category_id", "title", "banner", "description", "category", "creator"]
 
     def create(self, validated_data):
         category_id = validated_data.pop('category_id')
@@ -34,6 +36,7 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     blog = BlogSerializer(read_only=True)
     blog_id = serializers.IntegerField(write_only=True)
 
@@ -41,7 +44,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["title", "post_text", "blog", "author", "blog_id"]
+        fields = ["id", "title", "post_text", "blog", "author", "blog_id"]
 
     def create(self, validated_data):
         blog_id = validated_data.pop('blog_id')

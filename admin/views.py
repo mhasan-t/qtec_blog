@@ -30,7 +30,8 @@ class AdminDashboardView(AdminRequiredMixin, View):
 
 class AdminDashboardChartData(AdminRequiredMixin, View):
     def get(self, request):
-        category_counts = Category.objects.annotate(num_of_blogs=Count("blogs")).values()
+        category_counts = Category.objects.annotate(
+            num_of_blogs=Count("blogs")).values()
         category_counts_list = [dict(elem) for elem in category_counts]
 
         return JsonResponse(category_counts_list, status=HTTPStatus.OK, safe=False)
@@ -50,7 +51,7 @@ class AdminBlogListView(AdminRequiredMixin, View):
         # Filter by author name
         author = request.GET.get("author")
         if author:
-            print(author)
+
             blogs = blogs.filter(creator__full_name__icontains=author)
 
         # Pagination
@@ -79,9 +80,7 @@ class LoginView(View):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        print(username, password)
         user = authenticate(request, username=username, password=password)
-        print(user)
 
         if user is not None:
             login(request, user)

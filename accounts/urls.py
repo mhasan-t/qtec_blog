@@ -7,8 +7,6 @@ from rest_framework_simplejwt.views import (
 
 from . import views
 
-app_name = 'accounts'
-
 router = routers.SimpleRouter()
 router.register(r'users', views.UserViews)
 
