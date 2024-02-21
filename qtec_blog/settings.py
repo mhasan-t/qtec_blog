@@ -86,7 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'qtec_blog',
-        "HOST": "127.0.0.1",
+        # "HOST": "127.0.0.1",
+        "HOST": "db", # for docker
         "PORT": "3306",
         "USER": 'noon',
         "PASSWORD": 'passpass'
